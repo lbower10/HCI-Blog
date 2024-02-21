@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 1</title>
+    <style>
+        .header {
+            display: flex;
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
+            height: 100px; /* Adjust height as needed */
+        }
+        .LoganImage {
+            max-width: 100%;
+        }
+        .normdiv{
+            margin: auto;
+            display: flex;
+            justify-content: center; 
+            width: 75%;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Project 1: Guitar Hero (Kind of)</h1>
+    </div>
+    <div class="normdiv">
+        <p>
+            Project 1 instructed us to create a game using our 8x8 LED matrix
+            using an inventive input type of our choosing. My partner, Dean Longmire, and I decided to
+            try and create a game that resembled the popular video game "Guitar Hero."
+            We first programmed our LED matrix to randomly generate a number that 
+            coresponds to a column in the matrix (46 through 53). We then programmed the matrix
+            to light up two LEDs side by side. These pairs represent our "notes" that the
+            user must match. The matching is done by three buttons, our inventive input, corresponding to three
+            rows on the matrix in which the notes fall from.
+        </p>
+    </div>
+    <div class="normdiv">
+        <h1>Pinout Diagram for the Matrix</h1>
+    </div>
+    <div style="margin: auto; display: flex; justify-content: center; width: 75%; margin-bottom: 10px">
+        <img class="LoganImage" src="./images/pinout.png">
+    </div>
+    <div class="normdiv">
+        <h1>Row and Column Reference</h1>
+    </div>
+    <div class="normdiv">
+        <img class="LoganImage" src="./images/colsrows.png">
+    </div>
+    <div style="margin: auto; display: flex; justify-content: center; align-items: center;width: 75%">
+        <p>
+            Coming from a Computer Science background, the majority of the
+            time on this project was spent simply trying to figure out setting
+            up the circuit and how to correctly light up areas of the matrix We
+            wanted to light up. Once this was done, writing the actual game logic was
+            <i>relatively</i> simple (Thanks Computer Science!).
+        </p>
+    </div>
+    <div class="normdiv">
+        <img class="LoganImage" src="./images/startnote.png">
+    </div>
+    <div class="normdiv">
+        <p>
+            Above is a snippet of code that demonstrates how we light up
+            an LED on our matrix. We simply write the column to HIGH, and the row to LOW.
+            This allows us to choose the specific LED that we want to emit light from.
+            We also write the row next to the parametered row HIGH, as our notes are in pairs.
+        </p>
+    </div>
+    <div class="normdiv">
+        <img class="LoganImage" src="./images/setup.png">
+    </div>
+    <div class="normdiv">
+        <p>
+            Above is a snippet of code that initializes our LED matrix.
+            We set pins 22 - 29 (rows) and pins 46 - 53 (columns) to output mode.
+            We initialize the columns to HIGH so that the matrix begins without being lit up.
+        </p>
+    </div>
+    <div class="normdiv">
+        <h1>Pictured is the final design of our game circuit.</h1>
+    </div>
+    <div class="normdiv">
+        <img class="LoganImage" src="./images/circuit.jpg">
+    </div>
+
+    <div class="normdiv">
+        <h1>Sample Gameplay</h1>
+    </div>
+    <div class="normdiv">
+        <p>
+            Here is a snippet of gameplay in the early levels of our game.
+            You can see the game logs in the terminal that show what level
+            the player is on, as well as the green RGB LED that blinks when
+            the player successfully hits the correct note.
+        </p>
+    </div>
+    <div class="normdiv">
+        <video class="LoganImage" controls>
+            <source src="./vids/IMG_5963.MOV">
+        </video>
+    </div>
+    <div class="normdiv">
+        <h1>Harder Gameplay</h1>
+    </div>
+    <div class="normdiv">
+        <p>
+            Here is a snippet of gameplay where the player has progressed
+            and reached a higher level in the game. You will observe how the notes
+            fall faster, and the player must react accordingly. When the player loses the game,
+            the RGB LED will blink red to indicate game over.
+        </p>
+    </div>
+    <div class="normdiv">
+        <video class="LoganImage" controls>
+            <source src="./vids/IMG_5965.mov">
+        </video>
+    </div>
+
+</body>
+</html>
