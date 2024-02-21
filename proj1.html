@@ -7,9 +7,9 @@
     <style>
         .header {
             display: flex;
-            justify-content: center; /* Center content horizontally */
-            align-items: center; /* Center content vertically */
-            height: 100px; /* Adjust height as needed */
+            justify-content: center;
+            align-items: center;
+            height: 100px;
         }
         .LoganImage {
             max-width: 100%;
@@ -21,6 +21,13 @@
             width: 75%;
             margin-bottom: 10px;
         }
+        pre {
+            white-space: pre-line;
+            background-color: #393838;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
     </style>
 </head>
 <body>
@@ -119,6 +126,227 @@
         <video class="LoganImage" controls>
             <source src="./vids/IMG_5965.mov">
         </video>
+    </div>
+    <div class="normdiv">
+        <h1>Here is the entire code for our game. Enjoy!</h1>
+    </div>
+    <div class="normdiv">
+        <pre>
+            <code lang="cpp">
+                int randomNote;
+                int lastNote;
+                int speed = 200;
+                int hitCount = 0;
+                int stepSize = 5;
+                int level = 0;
+
+                volatile boolean buttonOnePressed = false;
+                volatile boolean buttonTwoPressed = false;
+                volatile boolean buttonThreePressed = false;
+                volatile boolean gameStarted = false;
+                volatile boolean wasNoteHit = false;
+                volatile unsigned long buttonPressTime = 0;
+
+                void setup() {
+                  for(int i = 22; i <= 29; i++) {
+                    pinMode(i, OUTPUT);
+                  }
+              
+                  for(int i = 46; i <= 53; i++) {
+                    pinMode(i, OUTPUT);
+                    digitalWrite(i, HIGH);
+                  }
+              
+                  pinMode(A0, INPUT);
+                  pinMode(8, OUTPUT);
+                  pinMode(9, OUTPUT);
+                  pinMode(10, OUTPUT);
+              
+                  attachInterrupt(digitalPinToInterrupt(2), handleButtonOnePress, RISING);
+                  attachInterrupt(digitalPinToInterrupt(18), handleButtonTwoPress, RISING);
+                  attachInterrupt(digitalPinToInterrupt(19), handleButtonThreePress, RISING);
+              
+                  Serial.begin(9600);
+                  randomSeed(10);
+              
+                  Serial.println("Press Button 1 To Begin...");
+                }
+
+                void handleButtonOnePress() {
+                  if(gameStarted) {
+                    buttonPressTime = millis();
+                    buttonOnePressed = true;
+                  }
+                  gameStarted = true;
+                }
+
+                void handleButtonTwoPress() {
+                  buttonPressTime = millis();
+                  buttonTwoPressed = true;
+                }
+
+                void handleButtonThreePress() {
+                  buttonPressTime = millis();
+                  buttonThreePressed = true;
+                }
+
+                void displayHit() {
+                  analogWrite(10, 255);
+                  delay(30);
+                  analogWrite(10, 0);
+                  hitCount++;
+                  wasNoteHit = true;
+                }
+
+                void displayMiss() {
+                  analogWrite(8, 255);
+                  delay(30);
+                  analogWrite(8, 0);
+                }
+
+                void startNote(int row, int col) {
+                  digitalWrite(col, HIGH);
+                  digitalWrite(row, LOW);
+                  digitalWrite(row - 1, LOW);
+                }
+
+                void turnOffNote(int row, int col) {
+                  digitalWrite(col, LOW);
+                }
+
+                // Column Mappings
+                // Column 1 = Note 53
+                // Column 2 = Note 50
+                // Column 3 = Note 47
+                void checkInput(int correctColumn, unsigned long expectedTime) {
+                    unsigned long currentTime = millis();
+                    if (buttonOnePressed && abs(currentTime - expectedTime) <= 50 && correctColumn == 53) {  // Check if button pressed within 50 milliseconds of expected time
+                      displayHit();
+                      if(hitCount != 0 && hitCount % stepSize == 0 && speed > 75) {
+                        level++;
+                        Serial.print("Level ");
+                        Serial.println(level);
+                        speed -= 10;
+                      }
+                    } else if(buttonTwoPressed && abs(currentTime - expectedTime) <= 50 && correctColumn == 50) {
+                      displayHit();
+                      if(hitCount != 0 && hitCount % stepSize == 0 && speed > 75) {
+                        level++;
+                        Serial.print("Level ");
+                        Serial.println(level);
+                        speed -= 10;
+                      }
+                    } else if(buttonThreePressed && abs(currentTime - expectedTime) <= 50 && correctColumn == 47) {
+                      displayHit();
+                      if(hitCount != 0 && hitCount % stepSize == 0 && speed > 75) {
+                        level++;
+                        Serial.print("Level ");
+                        Serial.println(level);
+                        speed -= 10;
+                      }
+                    } else if(buttonOnePressed || buttonTwoPressed || buttonThreePressed) {
+                      displayMiss();
+                      endGame();
+                    }
+                    buttonOnePressed = false; 
+                    buttonTwoPressed = false; 
+                    buttonThreePressed = false; 
+                }
+
+                int generateNoteRow() {
+                  int randomNote = random(46, 54);
+                
+                  if(randomNote == 48 || randomNote == 51) {
+                    randomNote = generateNoteRow();
+                  } else if(randomNote == 46 || randomNote == 49 || randomNote == 52) {
+                    return randomNote + 1;
+                  }
+              
+                  return randomNote;
+                }
+
+                void wasNoteMissed() {
+                  if(wasNoteHit == false) {
+                    endGame();
+                  }
+                }
+
+                void endGame() {
+                  Serial.println("Game Over!");
+                  Serial.print("Score: ");
+                  Serial.println(hitCount);
+                
+                  gameStarted = false;
+                  hitCount = 0;
+                  level = 0;
+                }
+
+                void scaleDifficulty() {
+                  if(speed <= 150 && speed > 100) {
+                    stepSize = 10;
+                  } else if(speed <= 100 && speed > 90) {
+                    stepSize = 15;
+                  } else if(speed <= 80 && speed > 70) {
+                    stepSize = 20;
+                  }
+                }
+
+                void loop() {
+                  randomNote = generateNoteRow();
+                
+                  if(gameStarted) {
+                    scaleDifficulty();
+                
+                    for(int i = 0; i < 8; i++) {
+                      if(i == 0) {
+                        turnOffNote(randomNote, 29);
+                        startNote(randomNote, 22);
+                        checkInput(lastNote, millis());
+                      } else if(i == 1) {
+                        wasNoteMissed();
+                        wasNoteHit = false;
+                    
+                        turnOffNote(randomNote, 22);
+                        startNote(randomNote, 23);
+                        checkInput(randomNote, 0);
+                      } else if(i == 2) {
+                        turnOffNote(randomNote, 23);
+                        startNote(randomNote, 24);
+                        checkInput(randomNote, 0);
+                      } else if(i == 3) {
+                        turnOffNote(randomNote, 24);
+                        startNote(randomNote, 25);
+                        checkInput(randomNote, 0);
+                      } else if(i == 4) {
+                        turnOffNote(randomNote, 25);
+                        startNote(randomNote, 26);
+                        checkInput(randomNote, 0);
+                      } else if(i == 5) {
+                        turnOffNote(randomNote, 26);
+                        startNote(randomNote, 27);
+                        checkInput(randomNote, 0);
+                      } else if(i == 6) {
+                        turnOffNote(randomNote, 27);
+                        startNote(randomNote, 28);
+                        checkInput(randomNote, millis());
+                      } else if(i == 7) {
+                        turnOffNote(randomNote, 28);
+                        startNote(randomNote, 29);
+                        checkInput(randomNote, millis());
+                      }
+                    delay(speed);
+                    }
+                
+                    for(int i = 46; i <= 53; i++) {
+                      pinMode(i, OUTPUT);
+                      digitalWrite(i, HIGH);
+                    }
+                
+                    lastNote = randomNote;
+                  }
+                }
+            </code>
+        </pre>
     </div>
 
 </body>
