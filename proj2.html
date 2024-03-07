@@ -53,10 +53,10 @@
             The main idea of our game is for players to guess
             each others' input correctly. The arduino and other components will 
             sit in a shoebox, or some other kind of encasing, with a divider in the middle
-            and onnings on either side. These onnings will shield the conductive Play-Dough
+            and awnings on either side. These awnings will shield the conductive Play-Dough
             inputs from a player's opponent. Player 1 will press one of his input devices,
             which will be either red, green, or blue Play-Dough. It is then Player 2's job
-            to correectly match Player 1's input. A player will score if their opponent does
+            to correctly match Player 1's input. A player will score if their opponent does
             not guess correctly OR if they correctly guess what their opponent selected.
         </p>
     </div>
@@ -68,6 +68,16 @@
     </div>
     <div class="normdiv">
         <h2>Play Dough Time!</h2>
+    </div>
+    <div class="normdiv">
+        <p>
+            We used an old shoebox as a shell to our game to keep any wires out of view. We also applied 
+            LEDs, outer input clamps, and the stand-in play-doh balls to provide us with a strongly visual 
+            prototype to help us envision the project better. Wires were strategically paired with their corresponding 
+            play-doh balls for visual appeal and decreased chance of human error when doing the internal wiring. It was 
+            at this point that we also decided to only make the games first to three since adding more LEDs would 
+            be difficult with the limited space and amount of wires we were already using.
+        </p>
     </div>
     <div class="normdiv">
         <h2>Dean is having so much fun!</h2>
@@ -97,10 +107,22 @@
         <h2>Box Circuitry</h2>
     </div>
     <div class="normdiv">
+        <p>
+            As we mentioned earlier, the wiring was extensive for this many input and output devices. Because we ensured  
+            that wire coloring was consistent, there were only a few small errors that were easy to deal with.
+        </p>
+    </div>
+    <div class="normdiv">
         <img class="LoganImage" src="./images/proj2/IMG_6075.jpg">
     </div>
     <div class="normdiv">
         <img class="LoganImage" src="./images/proj2/IMG_6076.jpg">
+    </div>
+    <div class="normdiv">
+        <p>
+            Once we were able to get all the LEDs to power on, we decided to start formulating and 
+            writing code that would run the game.
+        </p>
     </div>
 
     <div class="normdiv">
@@ -113,7 +135,7 @@
             You can see that when a player makes their guess,
             the three LEDs in the middle flash, indicating that
             the turns have switched. You can also see the scorekeeping
-            yellow LEDs on the side. Three points to win.
+            yellow LEDs on the side needing three points to win.
         </p>
     </div>
     <div class="normdiv">
@@ -121,31 +143,53 @@
             <source src="./vids/proj2/gameplay2.mp4">
         </video>
     </div>
+    <div class="normdiv">
+        <p>
+            There were still things that needed to be more fleshed out and polished, but for the time being, 
+            we wanted to first get our star component integrated into the system.
+        </p>
+    </div>
 
 
     <div class="normdiv">
         <h2>Creating Conductive Play Dough Input</h2>
     </div>
     <div class="normdiv">
-        <p>Ingredients</p>
+        <p>
+            Following these simple <a href="https://www.instructables.com/How-to-make-conductive-play-dough/" target="_blank">instructions</a>, 
+            we were able to cook our own play-doh capable of holding 
+            a charge, allowing us to detect a change of capacitance when contacted by skin.
+        </p>
+    </div>
+    <div class="normdiv">
+        <h3>Ingredients</h3>
     </div>
     <div class="normdiv">
         <img class="LoganImage" src="./images/proj2/input/IMG_1713.jpg">
     </div>
     <div class="normdiv">
-        <p>Cooked Dough</p>
+        <h3>Cooked Dough</h3>
     </div>
     <div class="normdiv">
         <img class="LoganImage" src="./images/proj2/input/IMG_1714.jpg">
     </div>
     <div class="normdiv">
-        <p>Food Coloring Added</p>
+        <h3>Food Coloring Added</h3>
     </div>
     <div class="normdiv">
         <img class="LoganImage" src="./images/proj2/input/IMG_1716.jpg">
     </div>
     <div class="normdiv">
-        <p>Conductivity Testing</p>
+        <h3>Conductivity Testing</h3>
+    </div>
+    <div class="normdiv">
+        <p>
+            In order to easily measure capacitance of a conductive surface, we used an Arduino 
+            library called <a href="https://www.arduino.cc/reference/en/libraries/capacitivesensor/" target="_blank">CapacitanceSensor.h</a> 
+            that used a function to measure it for us if provided the correct pins. This was just a simple circuit to check if the play-doh had 
+            the desired properties, and it did! Each ball used in the system will have a clone of this circuit that consists of a digital read pin, 1M ohm resistor, 
+            and a 'ground' to the specified pin, in this case, 2.
+        </p>
     </div>
     <div class="normdiv">
         <img class="LoganImage" src="./images/proj2/input/IMG_1717.jpg">
@@ -154,6 +198,15 @@
 
     <div class="normdiv">
         <h2>Showcasing Input Reactivity</h2>
+    </div>
+    <div class="normdiv">
+        <p>
+            The inputs ended up being extremely responsive to the touch and worked exactly as we needed them to for the game. 
+            The only issue we ran into was that when placing the game on a conductive surface, such as a metal table, 
+            the readings will be inconsistent and unresponsive. This is because the table's conductive surface connects all the 
+            play-doh balls in the same circuit, causing unpredictable behavior. However, this can be easily mitigated by placing 
+            all balls on a paper towel.
+        </p>
     </div>
     <div class="normdiv">
         <video class="LoganImage" controls>
