@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HCI Final Project</title>
+    <style>
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
+        .LoganImage {
+            /* max-width: 100%; */
+            width: 500px;
+            height: 360px;
+            overflow: hidden
+        }
+        .MLImage {
+            width: 800px;
+            height: 350px;
+            overflow: hidden;
+        }
+        .normdiv{
+            margin: auto;
+            display: flex;
+            justify-content: center; 
+            width: 75%;
+            margin-bottom: 10px;
+        }
+        pre {
+            white-space: pre-line;
+            background-color: #393838;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Final Project: Predictive Driving Behavior</h1>
+    </div>
+    <div class="normdiv">
+        <p>Logan Bowers | Justin Bowers | Dean Longmire | Finli Hill</p>
+    </div>
+
+    <div class="normdiv">
+        <p>
+            For the final project, the four of us decided on using
+            machine learning, along with the data collected from the can bus
+            of Dean's car, to classify driving behavior.
+            To do this, we trained a machine learning model on driving that
+            we sourced from
+            <a href="https://www.kaggle.com/datasets/outofskills/driving-behavior">kaggle.</a>
+        </p>
+    </div>
+
+    <div class="normdiv">
+        <h1>Testing the model</h1>
+    </div>
+    <div class="normdiv">
+        <p>
+            Once the model was trained, we exported it
+            into a binary file using the picle library
+            in python. Here is the result of a script we wrote
+            to simulate data flowing into the model.
+        </p>
+    </div>
+    <div class="normdiv">
+        <img class="MLImage" src="./images/final/test.png">
+    </div>
+
+    <div class="normdiv">
+        <h1>Gathering Parts</h1>
+    </div>
+    
+    <div class="normdiv">
+        <p>
+            The parts we gathered for this project included an OBD port adapter for CAN bus
+            sniffing, an ESP32 for bluetooth connection, a buck converter, Arduino
+            nano, MCP2515, a ttgo t-display, and we also 3D printed a box for the
+            finished device to sit in.
+        </p>
+    </div>
+
+    <div class="normdiv">
+        <h1>A few of the parts:</h1>
+    </div>
+
+    <div class="normdiv">
+        <h2>ESP32</h2>
+    </div>
+    <div class="normdiv">
+        <img class="LoganImage" src="./images/final/esp.png">
+    </div>
+
+    <div class="normdiv">
+        <h2>OBD Port Adapter</h2>
+    </div>
+    <div class="normdiv">
+        <img class="LoganImage" src="./images/final/OBDorder.png">
+    </div>
+
+    <div class="normdiv">
+        <h2>Box for the device to sit in</h2>
+    </div>
+    <div class="normdiv">
+        <img class="LoganImage" src="./images/final/Box.png">
+    </div>
+
+    <div class="normdiv">
+        <h2>All plugged up</h2>
+    </div>
+    <div class="normdiv">
+        <img class="LoganImage" src="./images/final/circuits.png">
+    </div>
+
+    <div class="normdiv">
+        <h1>Data flow of our device</h1>
+    </div>
+    <div class="normdiv">
+        <img class="LoganImage" src="./images/final/dataflowdia.png">
+    </div>
+    <div class="normdiv">
+        <p>
+            <u>Explanation:</u> The OBD adapter allows us to plug
+            in and sniff our data from the CAN bus of the car.
+            That data is then reformatted into something that our
+            machine learning model was trained on. The model then
+            predicts the driving behavior that it is seeing from
+            the Accelerator and Gyroscope x, y, and z data points.
+        </p>
+    </div>
+
+
+    <div class="normdiv">
+        <h1>Demo Video</h1>
+    </div>
+    <div class="normdiv">
+        Placeholder
+    </div>
+    
+</body>
+</html>
